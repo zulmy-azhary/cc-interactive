@@ -3,10 +3,10 @@ import { BackCard, FrontCard } from ".";
 </script>
 
 <template>
-  <div class="side">
+  <aside class="side">
     <FrontCard name="Testing" />
     <BackCard />
-  </div>
+  </aside>
 </template>
 
 <style scoped>

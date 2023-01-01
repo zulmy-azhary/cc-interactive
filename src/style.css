@@ -1,6 +1,12 @@
 @font-face {
   font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk-SemiBold.ttf") format("truetype");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Space Grotesk";
   src: url("/assets/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+  font-weight: normal;
 }
 
 :root {
@@ -47,6 +53,28 @@
   row-gap: 3rem;
 }
 
+label, input, button {
+  font-family: "Space Grotesk";
+}
+
+p {
+  text-transform: uppercase;
+}
+
+input, button {
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 8px;
+}
+
+.button {
+  background-color: var(--veryDarkGrayishViolet);
+  border: none;
+  color: white;
+}
+
 img {
   user-select: none;
 }
@@ -57,17 +85,37 @@ img {
   aspect-ratio: 16/9;
   overflow: hidden;
   border-radius: 0.25rem;
-  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 70px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s;
+}
+
+@media (min-width: 768px) {
+  #app {
+    row-gap: 4rem;
+  }
+  .card {
+    width: 17rem;
+    border-radius: 0.3rem;
+  }
 }
 
 @media (min-width: 1024px) {
   #app {
-    grid-template-columns: 35% 1fr;
+    grid-template-columns: var(--mobile) 1fr;
     grid-template-rows: auto;
   }
 
   .card {
-    width: 25rem;
+    width: 22rem;
     border-radius: 0.5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  #app {
+    grid-template-columns: calc(var(--mobile) * 1.25) 1fr;
+  }
+  .card {
+    width: 25rem;
   }
 }
