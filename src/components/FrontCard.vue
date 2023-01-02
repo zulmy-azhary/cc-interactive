@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { data } from "../store";
-defineProps<{ name: string }>();
+import { CardName, CardNumber, CardDate } from ".";
 </script>
 
 <template>
   <div class="card card-front">
     <div class="card-front__content">
       <img class="card-front__logo" src="/assets/images/card-logo.svg" alt="Card Logo" />
-      <div class="card-front__number">
-        <p>{{ !!data.cardNumber ? data.cardNumber : "0000 0000 0000 0000" }}</p>
-      </div>
-      <div class="card-front__footer">
-        <p>{{ !!data.fullName ? data.fullName : "Jane Appleseed" }}</p>
-        <p>test</p>
+      <div class="card-front__details">
+        <CardNumber :cardNumber="data.cardNumber" />
+        <div class="card-front__footer">
+          <CardName :fullName="data.fullName" />
+          <CardDate :expiration="{ months: data.months, years: data.years }" />
+        </div>
       </div>
     </div>
   </div>
@@ -26,17 +26,23 @@ defineProps<{ name: string }>();
   transform: translate(-12.5%, 95%);
 }
 
-.card-front__logo {
-  width: 20%;
-  height: auto;
-}
-
 .card-front__content {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
+}
+
+.card-front__logo {
+  width: 20%;
+  height: auto;
+}
+
+.card-front__details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25rem;
 }
 
 .card-front__footer {

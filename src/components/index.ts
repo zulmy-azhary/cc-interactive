@@ -5,3 +5,7 @@ export { default as BackCard } from "./BackCard.vue";
 export { default as Input } from "./Input.vue";
 export { default as Form } from "./Form.vue";
 export { default as Finish } from "./Finish.vue";
+export { default as Text } from "./Text.vue";
+export { default as CardName } from "./CardName.vue";
+export { default as CardNumber } from "./CardNumber.vue";
+export { default as CardDate } from "./CardDate.vue";

@@ -4,7 +4,7 @@ import { BackCard, FrontCard } from ".";
 
 <template>
   <aside class="side">
-    <FrontCard name="Testing" />
+    <FrontCard />
     <BackCard />
   </aside>
 </template>

@@ -53,7 +53,9 @@
   row-gap: 3rem;
 }
 
-label, input, button {
+label,
+input,
+button {
   font-family: "Space Grotesk";
 }
 
@@ -61,7 +63,8 @@ p {
   text-transform: uppercase;
 }
 
-input, button {
+input,
+button {
   width: 100%;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -73,6 +76,7 @@ input, button {
   background-color: var(--veryDarkGrayishViolet);
   border: none;
   color: white;
+  cursor: pointer;
 }
 
 img {

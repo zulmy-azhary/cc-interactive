@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { v$ } from "../store";
 import type { Data, Name } from "../types";
 type Props = {
   data: Data;
@@ -40,6 +41,7 @@ const inputHandler = (e: Event) => {
         autocomplete="off"
       />
     </div>
+    <span class="error-msg">Error message</span>
   </div>
   <div class="input-form" v-else>
     <label :for="name">{{ label }}</label>
@@ -52,6 +54,7 @@ const inputHandler = (e: Event) => {
       :placeholder="placeholder"
       autocomplete="off"
     />
+    <span v-for="error in v$[name as Name].$errors" class="error-msg">{{ error.$message }}</span>
   </div>
 </template>
 
@@ -70,6 +73,13 @@ const inputHandler = (e: Event) => {
 .expire {
   display: flex;
   column-gap: 0.5rem;
+}
+
+.error-msg {
+  color: var(--red);
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 1.5rem;
 }
 
 label {
