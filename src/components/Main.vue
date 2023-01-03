@@ -21,7 +21,4 @@ const setValid = () => {
   justify-content: center;
   align-items: center;
 }
-
-@media (min-width: 768px) {
-}
 </style>

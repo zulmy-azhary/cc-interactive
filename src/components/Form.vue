@@ -1,54 +1,52 @@
 <script setup lang="ts">
-import { data } from "../store";
-import type { Name } from "../types";
+import { data, v$ } from "../store";
 import { Input } from ".";
-import { v$ } from '../store';
+import { Name, Data } from "../types";
 
 type ButtonEvent = (e: "buttonClicked") => void;
 const emit = defineEmits<ButtonEvent>();
 
+// Check length for each input
 const checkLength = (target: HTMLInputElement) => {
   const name = target.name as Name;
   const value = target.value;
 
   const checkFullName = name === "fullName" && value.length > 21;
-  const checkCvc = name === "cvc" && value.length > 3;
-  const checkExpiration = (name === "months" || name === "years") && value.length > 2;
+  const checkCVC = name === "cvc" && value.length > 3;
+  const checkExpired = (name === "months" || name === "years") && value.length > 2;
 
-  if (checkFullName || checkCvc || checkExpiration) return true;
+  if (checkFullName) return (data.fullName = value.slice(0, 21));
+  if (checkCVC) return (data.cvc = value.slice(0, 3));
+  if (checkExpired) return (data[name] = value.slice(0, 2));
 };
 
+// For Card Number Input
 const updateNumber = (input: HTMLInputElement) => {
-  const original = [...input.value.replaceAll(" ", "")];
+  const text = input.value.replace(/\s/g, "");
 
-  if (original.length > 16) return;
-  const positions = [4, 8, 12];
-  const modified: string[] = [];
+  if (text.length > 16) return (data.cardNumber = input.value.slice(0, 16 + 3));
+  const filter = text.replace(/(.{4})/g, "$1 ").trim();
 
-  original.map((value, idx) => {
-    modified.push(value);
-    if (positions.includes(idx + 1) && idx !== original.length - 1) modified.push(" ");
-  });
+  data.cardNumber = filter;
+};
 
-  data.cardNumber = modified.join("");
+// onChange Handler
+const inputHandler = (target: HTMLInputElement) => {
+  if (checkLength(target)) return;
+  if (target.name === "cardNumber") updateNumber(target);
+  else data[target.name as Name] = target.value;
+
+  console.log(target.value);
 };
 
 const onSubmit = async () => {
   const result = await v$.value.$validate();
   if (result) {
     emit("buttonClicked");
+    v$.value.$reset();
   }
   console.log(data);
   console.log(v$.value.$errors);
-};
-
-const onChange = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const name = target.name as Name;
-
-  if (checkLength(target)) return;
-  if (name === "cardNumber") updateNumber(target);
-  else data[name] = target.value;
 };
 </script>
 
@@ -59,30 +57,30 @@ const onChange = (e: Event) => {
         name="fullName"
         label="Cardholder Name"
         v-bind="{ data }"
-        @onChange="onChange"
         placeholder="e.g. Jane Appleseed"
+        @inputHandler="inputHandler"
       />
       <Input
         name="cardNumber"
         label="Card Number"
         v-bind="{ data }"
-        @onChange="onChange"
         placeholder="e.g. 1234 5678 9123 0000"
+        @inputHandler="inputHandler"
       />
       <Input
         type="number"
         expiration
         v-bind="{ data }"
-        @onChange="onChange"
         label="Exp. Date (MM/YY)"
+        @inputHandler="inputHandler"
       />
       <Input
         type="number"
         name="cvc"
         v-bind="{ data }"
-        @onChange="onChange"
         label="CVC"
         placeholder="e.g. 123"
+        @inputHandler="inputHandler"
       />
     </div>
     <button class="button">Confirm</button>

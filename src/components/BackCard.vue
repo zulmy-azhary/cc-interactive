@@ -7,7 +7,7 @@ import { data } from "../store";
 <template>
   <div class="card card-back">
     <div class="card-back__cvc">
-      <Text :length="3" :value="data.cvc" :defaultValue="'000'" :chars="alphanumerics" />
+      <Text :length="3" :value="data.cvc.toString()" :defaultValue="'000'" :chars="alphanumerics" />
     </div>
   </div>
 </template>

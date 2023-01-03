@@ -15,9 +15,9 @@ const calculate = computed(() => {
   const _value = (props.value || "") + props.defaultValue.slice(props.value?.length);
   const data = Array(props.length).fill(0);
 
-  const isActive = (i: number, _i: number) => {
-    if (props.chars.indexOf(_value[i]?.toUpperCase()) === -1 && _i === 0) return true;
-    return props.chars.indexOf(_value[i]?.toUpperCase()) === _i;
+  const isActive = (idxValue: number, _i: number) => {
+    if (props.chars.indexOf(_value[idxValue]?.toUpperCase()) === -1 && _i === 0) return true;
+    return props.chars.indexOf(_value[idxValue]?.toUpperCase()) === _i;
   };
 
   return { data, isActive };

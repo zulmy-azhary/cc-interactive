@@ -12,9 +12,9 @@ defineProps<Props>();
 
 <template>
   <div class="card-front__expiration">
-    <Text :length="2" :value="expiration.months" :defaultValue="'00'" :chars="numbers" />
+    <Text :length="2" :value="expiration.months.toString()" :defaultValue="'00'" :chars="numbers" />
     <span>/</span>
-    <Text :length="2" :value="expiration.years" :defaultValue="'00'" :chars="numbers" />
+    <Text :length="2" :value="expiration.years.toString()" :defaultValue="'00'" :chars="numbers" />
   </div>
 </template>
 

@@ -9,12 +9,15 @@ type Props = {
   type?: string;
   placeholder?: string;
 };
-type OnChangeEvent = (event: "onChange", e: Event) => void;
+type InputHandler = (e: "inputHandler", target: HTMLInputElement) => void;
+// Passing props
 const props = defineProps<Props>();
-const emit = defineEmits<OnChangeEvent>();
+const emit = defineEmits<InputHandler>();
 
+// onChange Handler
 const inputHandler = (e: Event) => {
-  emit("onChange", e);
+  const target = e.target as HTMLInputElement;
+  emit("inputHandler", target);
 };
 </script>
 
@@ -25,30 +28,35 @@ const inputHandler = (e: Event) => {
       <input
         id="months"
         name="months"
-        :value="data.months"
+        v-model="data.months"
         @input="inputHandler"
-        :type="type || 'text'"
+        type="number"
         placeholder="MM"
         autocomplete="off"
       />
       <input
         id="years"
         name="years"
-        :value="data.years"
+        v-model="data.years"
         @input="inputHandler"
-        :type="type || 'text'"
+        type="number"
         placeholder="YY"
         autocomplete="off"
       />
     </div>
-    <span class="error-msg">Error message</span>
+    <span class="error-msg" v-for="months in v$.months.$errors">
+      {{ months.$message }}
+    </span>
+    <span class="error-msg" v-for="errorYears in v$.years.$errors">
+      {{ errorYears.$message }}
+    </span>
   </div>
   <div class="input-form" v-else>
     <label :for="name">{{ label }}</label>
     <input
       :id="name"
       :name="name"
-      :value="data[name as Name]"
+      v-model="data[name as Name]"
       @input="inputHandler"
       :type="type || 'text'"
       :placeholder="placeholder"
