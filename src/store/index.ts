@@ -1,7 +1,7 @@
 import { reactive, computed } from "vue";
 import type { Data } from "../types";
 import { useVuelidate } from "@vuelidate/core";
-import { required, minLength, maxLength, helpers } from "@vuelidate/validators";
+import { required, minLength, between, maxLength, helpers } from "@vuelidate/validators";
 
 export const initialValue: Data = {
   fullName: "",
@@ -21,9 +21,9 @@ const rules = computed(() => {
   return {
     fullName: { required: requiredMsg("Name"), maxLength: maxLength(21) },
     cardNumber: { required: requiredMsg("Card Number"), maxLength: maxLength(16 + 3) },
-    months: { required: requiredMsg("Exp. Date"), minLength: minLength(2) },
+    months: { required: requiredMsg("Exp. Date"), minLength: minLength(2), between: between(1, 12) },
     years: { required: requiredMsg("Exp. Date"), minLength: minLength(2) },
-    cvc: { required: requiredMsg("CVC"), maxLength: maxLength(3) },
+    cvc: { required: requiredMsg("CVC"), minLength: minLength(3) },
   };
 });
 

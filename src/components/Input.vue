@@ -28,7 +28,7 @@ const inputHandler = (e: Event) => {
       <input
         id="months"
         name="months"
-        v-model="data.months"
+        :value="data.months"
         @input="inputHandler"
         type="number"
         placeholder="MM"
@@ -37,7 +37,7 @@ const inputHandler = (e: Event) => {
       <input
         id="years"
         name="years"
-        v-model="data.years"
+        :value="data.years"
         @input="inputHandler"
         type="number"
         placeholder="YY"
@@ -56,7 +56,7 @@ const inputHandler = (e: Event) => {
     <input
       :id="name"
       :name="name"
-      v-model="data[name as Name]"
+      :value="data[name as Name]"
       @input="inputHandler"
       :type="type || 'text'"
       :placeholder="placeholder"

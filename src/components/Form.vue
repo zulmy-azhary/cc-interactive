@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { data, v$ } from "../store";
 import { Input } from ".";
-import { Name, Data } from "../types";
+import type { Name } from "../types";
 
 type ButtonEvent = (e: "buttonClicked") => void;
 const emit = defineEmits<ButtonEvent>();
@@ -15,28 +15,26 @@ const checkLength = (target: HTMLInputElement) => {
   const checkCVC = name === "cvc" && value.length > 3;
   const checkExpired = (name === "months" || name === "years") && value.length > 2;
 
-  if (checkFullName) return (data.fullName = value.slice(0, 21));
-  if (checkCVC) return (data.cvc = value.slice(0, 3));
-  if (checkExpired) return (data[name] = value.slice(0, 2));
+  if (checkFullName) return true;
+  if (checkCVC) return true;
+  if (checkExpired) return true;
 };
 
 // For Card Number Input
 const updateNumber = (input: HTMLInputElement) => {
   const text = input.value.replace(/\s/g, "");
 
-  if (text.length > 16) return (data.cardNumber = input.value.slice(0, 16 + 3));
-  const filter = text.replace(/(.{4})/g, "$1 ").trim();
+  if (text.length > 16) return (input.value = data.cardNumber);
 
+  const filter = text.replace(/(.{4})/g, "$1 ").trim();
   data.cardNumber = filter;
 };
 
 // onChange Handler
 const inputHandler = (target: HTMLInputElement) => {
-  if (checkLength(target)) return;
-  if (target.name === "cardNumber") updateNumber(target);
-  else data[target.name as Name] = target.value;
-
-  console.log(target.value);
+  if (checkLength(target)) return (target.value = data[target.name as Name]);
+  if (target.name === "cardNumber") return updateNumber(target);
+  return (data[target.name as Name] = target.value);
 };
 
 const onSubmit = async () => {
@@ -45,8 +43,6 @@ const onSubmit = async () => {
     emit("buttonClicked");
     v$.value.$reset();
   }
-  console.log(data);
-  console.log(v$.value.$errors);
 };
 </script>
 
