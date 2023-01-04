@@ -52,6 +52,7 @@ const rules = computed(() => {
     cvc: {
       required: requiredMsg("CVC"),
       minLength: minLengthMsg("Invalid CVC", 3),
+      minValue: helpers.withMessage("Invalid CVC", minValue(1)),
     },
   };
 });
