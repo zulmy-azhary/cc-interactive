@@ -11,7 +11,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <div class="card-front__expiration">
+  <div class="card-front__footer-expiration">
     <Text :length="2" :value="expiration.months.toString()" :defaultValue="'00'" :chars="numbers" />
     <span>/</span>
     <Text :length="2" :value="expiration.years.toString()" :defaultValue="'00'" :chars="numbers" />
@@ -19,10 +19,17 @@ defineProps<Props>();
 </template>
 
 <style scoped>
-.card-front__expiration {
+.card-front__footer-expiration {
   display: flex;
-  gap: 0.25rem;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
+  column-gap: 0.125rem;
+}
+
+@media (min-width: 1024px) {
+  .card-front__footer-expiration {
+    column-gap: 0.25rem;
+    font-size: 0.75rem;
+  }
 }
 </style>

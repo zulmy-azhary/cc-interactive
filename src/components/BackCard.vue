@@ -23,18 +23,22 @@ import { data } from "../store";
 
 .card-back__cvc {
   position: absolute;
-  top: 44.25%;
-  right: 12%;
+  top: 41%;
+  right: 11%;
   display: flex;
   column-gap: 0.075rem;
   color: white;
-  font-size: 0.75rem;
   letter-spacing: 2px;
+  font-size: 0.6rem;
 }
 
 @media (min-width: 768px) {
   .card-back {
     transform: translate(35%, -65%);
+  }
+
+  .card-back__cvc {
+    top: 42%;
   }
 }
 
@@ -42,10 +46,20 @@ import { data } from "../store";
   .card-back {
     transform: translateX(20%);
   }
+
+  .card-back__cvc {
+    top: 44%;
+    right: 12%;
+    font-size: 0.75rem;
+  }
 }
 @media (min-width: 1440px) {
   .card-back {
     transform: translateX(50%);
+  }
+
+  .card-back__cvc {
+    top: 44.25%;
   }
 }
 </style>

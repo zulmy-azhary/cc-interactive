@@ -25,8 +25,22 @@ const getNumber = computed(() => {
 <style scoped>
 .card-front__number {
   display: flex;
-  column-gap: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
+  column-gap: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .card-front__number {
+    column-gap: 0.875rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-front__number {
+    column-gap: 1rem;
+    font-size: 1.5rem;
+  }
 }
 </style>

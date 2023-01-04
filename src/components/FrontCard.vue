@@ -42,7 +42,7 @@ import { CardName, CardNumber, CardDate } from ".";
 .card-front__details {
   display: flex;
   flex-direction: column;
-  row-gap: 1.25rem;
+  row-gap: 0.5rem;
 }
 
 .card-front__footer {
@@ -55,6 +55,10 @@ import { CardName, CardNumber, CardDate } from ".";
   .card-front {
     transform: translate(-35%, 80%);
   }
+
+  .card-front__details {
+    row-gap: 0.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -64,6 +68,10 @@ import { CardName, CardNumber, CardDate } from ".";
 
   .card-front__content {
     padding: 1.5rem;
+  }
+
+  .card-front__details {
+    row-gap: 1.25rem;
   }
 }
 

@@ -15,9 +15,9 @@ const calculate = computed(() => {
   const _value = (props.value || "") + props.defaultValue.slice(props.value?.length);
   const data = Array(props.length).fill(0);
 
-  const isActive = (idxValue: number, _i: number) => {
-    if (props.chars.indexOf(_value[idxValue]?.toUpperCase()) === -1 && _i === 0) return true;
-    return props.chars.indexOf(_value[idxValue]?.toUpperCase()) === _i;
+  const isActive = (idxValue: number, idx: number) => {
+    if (props.chars.indexOf(_value[idxValue]?.toUpperCase()) === -1 && idx === 0) return true;
+    return props.chars.indexOf(_value[idxValue]?.toUpperCase()) === idx;
   };
 
   return { data, isActive };
@@ -25,7 +25,7 @@ const calculate = computed(() => {
 </script>
 
 <template>
-  <div class="card-text">
+  <div class="card-text" v-if="length">
     <template v-for="(_, idx) in calculate.data">
       <template v-for="(char, i) in chars">
         <p v-if="calculate.isActive(idx, i)">{{ char }}</p>
@@ -33,6 +33,7 @@ const calculate = computed(() => {
       </template>
     </template>
   </div>
+  <template v-else/>
 </template>
 
 <style scoped>
@@ -41,12 +42,30 @@ const calculate = computed(() => {
   align-items: center;
   position: relative;
   overflow: hidden;
-  column-gap: 0.25rem;
+  column-gap: 0.05rem;
 }
 
 .card-text p {
   text-align: center;
   animation: fadeIn 0.35s ease-out;
+}
+
+@media (min-width: 768px) {
+  .card-text {
+    column-gap: 0.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-text {
+    column-gap: 0.125rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-text {
+    column-gap: 0.25rem;
+  }
 }
 
 @keyframes fadeIn {

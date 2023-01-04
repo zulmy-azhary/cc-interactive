@@ -9,15 +9,15 @@ type Props = {
   type?: string;
   placeholder?: string;
 };
-type InputHandler = (e: "inputHandler", target: HTMLInputElement) => void;
+type OnChangeEvent = (e: "onChange", target: HTMLInputElement) => void;
 // Passing props
-const props = defineProps<Props>();
-const emit = defineEmits<InputHandler>();
+defineProps<Props>();
+const emit = defineEmits<OnChangeEvent>();
 
 // onChange Handler
-const inputHandler = (e: Event) => {
+const onChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  emit("inputHandler", target);
+  emit("onChange", target);
 };
 </script>
 
@@ -29,27 +29,27 @@ const inputHandler = (e: Event) => {
         id="months"
         name="months"
         :value="data.months"
-        @input="inputHandler"
+        @input="onChange"
         type="number"
         placeholder="MM"
         autocomplete="off"
+        :class="v$.months.$error ? 'error-input' : ''"
       />
       <input
         id="years"
         name="years"
         :value="data.years"
-        @input="inputHandler"
+        @input="onChange"
         type="number"
         placeholder="YY"
         autocomplete="off"
+        :class="v$.years.$error ? 'error-input' : ''"
       />
     </div>
-    <span class="error-msg" v-for="months in v$.months.$errors">
-      {{ months.$message }}
+    <span class="error-msg" v-if="v$.months.$error || v$.years.$error">
+      {{ v$.months.$errors[0]?.$message || v$.years.$errors[0]?.$message }}
     </span>
-    <span class="error-msg" v-for="errorYears in v$.years.$errors">
-      {{ errorYears.$message }}
-    </span>
+    <template v-else />
   </div>
   <div class="input-form" v-else>
     <label :for="name">{{ label }}</label>
@@ -57,16 +57,24 @@ const inputHandler = (e: Event) => {
       :id="name"
       :name="name"
       :value="data[name as Name]"
-      @input="inputHandler"
+      @input="onChange"
       :type="type || 'text'"
       :placeholder="placeholder"
       autocomplete="off"
+      :class="v$[name as Name].$error ? 'error-input' : ''"
     />
-    <span v-for="error in v$[name as Name].$errors" class="error-msg">{{ error.$message }}</span>
+    <span class="error-msg" v-if="v$[name as Name].$error">{{
+      v$[name as Name].$errors[0].$message
+    }}</span>
+    <template v-else />
   </div>
 </template>
 
 <style scoped>
+::-webkit-inner-spin-button {
+  display: none;
+}
+
 .input-form {
   display: flex;
   flex-direction: column;
@@ -81,6 +89,14 @@ const inputHandler = (e: Event) => {
 .expire {
   display: flex;
   column-gap: 0.5rem;
+}
+
+.error-input {
+  border-color: var(--red);
+}
+.error-input:focus,
+.error-input:active {
+  border-color: var(--red);
 }
 
 .error-msg {
